@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Banking System</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center">Simple Banking System</h1>
+    <div class="card mt-4">
+      <div class="card-body">
+        <h2>Bank Account Operations</h2>
+        <div class="mb-3">
+          <label for="depositAmount" class="form-label">Deposit Amount:</label>
+          <input type="number" class="form-control" id="depositAmount" placeholder="Enter amount to deposit">
+          <button class="btn btn-primary mt-2" onclick="deposit()">Deposit</button>
+        </div>
+        <div class="mb-3">
+          <label for="withdrawAmount" class="form-label">Withdraw Amount:</label>
+          <input type="number" class="form-control" id="withdrawAmount" placeholder="Enter amount to withdraw">
+          <button class="btn btn-primary mt-2" onclick="withdraw()">Withdraw</button>
+        </div>
+        <button class="btn btn-success mt-3" onclick="checkBalance()">Check Balance</button>
+        <div id="balanceResult" class="mt-3"></div>
+        <div class="mt-3">
+          <h3>Interest Rate: 6.99%</h3>
+          <button class="btn btn-info" onclick="applyInterest()">Apply Interest</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize the bank account balance
+    let balance = 0;
+    const interestRate = 6.99 / 100; // 6.99% interest rate
+
+    // Function to handle deposits
+    const deposit = () => {
+      const amount = parseFloat(document.getElementById('depositAmount').value);
+      if (amount > 0) {
+        balance += amount;
+        document.getElementById('balanceResult').innerHTML = `Deposited: $${amount.toFixed(2)}`;
+      } else {
+        document.getElementById('balanceResult').innerHTML = 'Deposit amount must be positive.';
+      }
+      document.getElementById('depositAmount').value = '';
+    };
+
+    // Function to handle withdrawals
+    const withdraw = () => {
+      const amount = parseFloat(document.getElementById('withdrawAmount').value);
+      if (amount > 0 && amount <= balance) {
+        balance -= amount;
+        document.getElementById('balanceResult').innerHTML = `Withdrew: $${amount.toFixed(2)}`;
+      } else if (amount > balance) {
+        document.getElementById('balanceResult').innerHTML = 'Insufficient funds.';
+      } else {
+        document.getElementById('balanceResult').innerHTML = 'Withdrawal amount must be positive.';
+      }
+      document.getElementById('withdrawAmount').value = '';
+    };
+
+    // Function to check the current balance
+    const checkBalance = () => {
+      document.getElementById('balanceResult').innerHTML = `Current Balance: $${balance.toFixed(2)}`;
+    };
+
+    // Function to apply interest to the balance
+    const applyInterest = () => {
+      balance += balance * interestRate;
+      document.getElementById('balanceResult').innerHTML = `Interest Applied. New Balance: $${balance.toFixed(2)}`;
+    };
+  </script>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
